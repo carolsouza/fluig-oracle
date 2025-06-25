@@ -1,12 +1,9 @@
 import sqlite3
 
 class SQLitePipeline:
-    def __init__(self, db_name='../src/data/content_data.db'):
-        self.connection = sqlite3.connect(db_name)
+    def open_spider(self, spider):
+        self.connection = sqlite3.connect('../src/data/content_data.db')
         self.cursor = self.connection.cursor()
-        self.create_table()
-
-    def create_table(self):
         self.cursor.execute('''
             CREATE TABLE IF NOT EXISTS content_data (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -19,12 +16,13 @@ class SQLitePipeline:
         ''')
         self.connection.commit()
 
-    def process_new_data(self, data):
+    def process_item(self, data, spider):
         self.cursor.execute('''
-            INSERT INTO scraped_data (title, category url, content) VALUES (?, ?, ?, ?)
+            INSERT INTO content_data (title, category, url, content) VALUES (?, ?, ?, ?)
         ''', (data['title'], data['category'], data['url'], data['content']))
         self.connection.commit()
         return data
 
-    def close_connection(self):
+    def close_spider(self, spider):
+        self.connection.commit()
         self.connection.close()
