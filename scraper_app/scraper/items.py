@@ -11,3 +11,4 @@ class ScraperItem(scrapy.Item):
     title = scrapy.Field()
     url = scrapy.Field()
     content = scrapy.Field()
+    content_md = scrapy.Field()

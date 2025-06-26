@@ -1,4 +1,5 @@
 import sqlite3
+from markdownify import markdownify as md
 
 class SQLitePipeline:
     def open_spider(self, spider):
@@ -11,15 +12,18 @@ class SQLitePipeline:
                 title TEXT,
                 url TEXT,
                 content TEXT,
+                content_md TEXT,
                 created_date datetime default current_timestamp
             )
         ''')
         self.connection.commit()
 
     def process_item(self, data, spider):
+        data["content_md"] = md(data["content_md"], strip=['a', 'img', 'script', 'style'])
+               
         self.cursor.execute('''
-            INSERT INTO content_data (title, category, url, content) VALUES (?, ?, ?, ?)
-        ''', (data['title'], data['category'], data['url'], data['content']))
+            INSERT INTO content_data (title, category, url, content, content_md) VALUES (?, ?, ?, ?, ?)
+        ''', (data['title'], data['category'], data['url'], data['content'], data["content_md"]))
         self.connection.commit()
         return data
 
