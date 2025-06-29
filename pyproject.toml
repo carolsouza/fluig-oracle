@@ -9,5 +9,4 @@ dependencies = [
     "pandas==2.3.0",
     "python-dotenv==1.1.0",
     "markdownify==1.0.0,",
-    "BeautifulSoup4==4.13.4",
 ]
