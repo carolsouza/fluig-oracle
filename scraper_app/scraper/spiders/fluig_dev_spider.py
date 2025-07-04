@@ -24,8 +24,6 @@ class FluigDevSpider(scrapy.Spider):
                 )
 
     def parse_side_menu(self, response):
-        print(f"parse_side_menu: {response.url}")
-
         category = response.meta["category"]
         for nav_item in response.css("div.bs-docs-section"):
             title = (
