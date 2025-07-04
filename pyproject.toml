@@ -2,7 +2,7 @@
 name = "fluig-oracle"
 version = "0.1.0"
 description = "A Scrapy spider for Fluig Oracle running with Streamlit and Deepseek"
-requires-python = ">=3.13"
+requires-python = ">=3.12"
 dependencies = [
     "scrapy==2.13.2",
     "streamlit==1.46.0",
